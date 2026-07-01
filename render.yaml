@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: shl-recommender
+    env: python
+    region: oregon           # cheapest free-tier region
+    plan: free
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    # Health-check — Render pings this after each deploy to confirm the
+    # service is alive before routing traffic.
+    healthCheckPath: /health
+
+    # Environment variables — set these in the Render dashboard.
+    # Do NOT hard-code secrets here; this file is committed to git.
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false          # "sync: false" = Render prompts you to fill it in the dashboard
+      - key: GOOGLE_API_KEY
+        sync: false

@@ -1,0 +1,41 @@
+{
+  "description": "Customer service agent — situational judgement + personality, volume hiring",
+  "persona": "Resourcing manager at a telecoms company running continuous volume hiring for customer service agents. Needs scalable, short assessments. Situational judgement and personality are priorities.",
+  "facts": {
+    "role": "Customer Service Agent",
+    "seniority": "entry-level",
+    "skills_to_assess": ["situational judgement", "personality", "verbal reasoning"],
+    "max_duration_minutes": 25,
+    "remote_proctoring": true,
+    "adaptive": null
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "We hire customer service agents constantly — hundreds a month. Need something quick and scalable."
+    },
+    {
+      "role": "assistant",
+      "content": "For high-volume customer service hiring I'd look at a situational judgement test and a short personality screen. What's your time limit per candidate?",
+      "recommendations": []
+    },
+    {
+      "role": "user",
+      "content": "25 minutes max. Remote only."
+    },
+    {
+      "role": "assistant",
+      "content": "Here are assessments well-suited for volume customer service hiring within 25 minutes...",
+      "recommendations": [
+        {"name": "Customer Service Simulation", "test_type": "Simulations"},
+        {"name": "OPQ32r", "test_type": "Personality & Behaviour"},
+        {"name": "Verify Verbal Reasoning", "test_type": "Ability & Aptitude"}
+      ]
+    }
+  ],
+  "expected_shortlist": [
+    "Customer Service Simulation",
+    "OPQ32r",
+    "Verify Verbal Reasoning"
+  ]
+}

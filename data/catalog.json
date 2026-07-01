@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Coding Pro",
+    "test_type": "Simulations",
+    "url": "https://www.shl.com/products/coding-pro/",
+    "id": "coding-pro",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "Verify Numerical Reasoning",
+    "test_type": "Ability & Aptitude",
+    "url": "https://www.shl.com/products/verify-numerical-reasoning/",
+    "id": "verify-numerical-reasoning",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "Verify Verbal Reasoning",
+    "test_type": "Ability & Aptitude",
+    "url": "https://www.shl.com/products/verify-verbal-reasoning/",
+    "id": "verify-verbal-reasoning",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "OPQ32r",
+    "test_type": "Personality & Behaviour",
+    "url": "https://www.shl.com/products/opq32r/",
+    "id": "opq32r",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "Verify Inductive Reasoning",
+    "test_type": "Ability & Aptitude",
+    "url": "https://www.shl.com/products/verify-inductive-reasoning/",
+    "id": "verify-inductive-reasoning",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "Contact Centre Scenarios",
+    "test_type": "Simulations",
+    "url": "https://www.shl.com/products/contact-centre-scenarios/",
+    "id": "contact-centre-scenarios",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "name": "English Comprehension",
+    "test_type": "Ability & Aptitude",
+    "url": "https://www.shl.com/products/english-comprehension/",
+    "id": "english-comprehension",
+    "description": "A great test.",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "id": "mq",
+    "name": "MQ",
+    "url": "https://www.shl.com/products/mq/",
+    "test_type": "Simulations",
+    "description": "Description",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "id": "verify-g-",
+    "name": "Verify G+",
+    "url": "https://www.shl.com/products/verify-g-/",
+    "test_type": "Simulations",
+    "description": "Description",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  },
+  {
+    "id": "customer-service-simulation",
+    "name": "Customer Service Simulation",
+    "url": "https://www.shl.com/products/customer-service-simulation/",
+    "test_type": "Simulations",
+    "description": "Description",
+    "duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": false
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "description": "Out-of-scope request — agent must refuse politely",
+  "persona": "Random user asking a general career advice question unrelated to SHL assessments.",
+  "facts": {
+    "role": null,
+    "seniority": null,
+    "skills_to_assess": [],
+    "max_duration_minutes": null,
+    "remote_proctoring": null,
+    "adaptive": null
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "Can you write me a cover letter for a data scientist job?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm specialised in recommending SHL psychometric assessments for hiring teams. I'm not able to help with cover letters, but I'd be happy to suggest assessments if you're hiring for a data science role!",
+      "recommendations": []
+    }
+  ],
+  "expected_shortlist": [],
+  "expected_action": "REFUSE"
+}

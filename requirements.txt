@@ -1,0 +1,30 @@
+# Web framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# Validation
+pydantic>=2.7.0
+
+# Lexical search (BM25) — required for retrieval.py
+rank-bm25>=0.2.2
+
+# LLM providers — set at least one API key in .env
+# Priority: GROQ_API_KEY > OPENAI_API_KEY > GOOGLE_API_KEY
+groq>=0.9.0                   # Groq Cloud (llama-3.3-70b-versatile)
+openai>=1.30.0                # OpenAI (gpt-4o-mini)
+google-genai>=1.0.0           # Google Gemini — current SDK (replaces google-generativeai)
+
+# Environment variable loading
+python-dotenv>=1.0.0
+
+# HTTP client (for eval harness)
+httpx>=0.27.0
+
+# Scraper
+playwright>=1.44.0
+beautifulsoup4>=4.12.0
+
+# Dev / test
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+

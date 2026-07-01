@@ -1,0 +1,41 @@
+{
+  "description": "Senior finance manager — numerical reasoning + leadership, on-site proctoring OK",
+  "persona": "Head of HR at a bank hiring a Finance Manager (VP level). Needs strong numerical reasoning and leadership/personality profile. On-site assessment centre context; proctoring mode is flexible. Duration up to 90 minutes.",
+  "facts": {
+    "role": "Finance Manager (VP)",
+    "seniority": "senior",
+    "skills_to_assess": ["numerical reasoning", "leadership", "personality"],
+    "max_duration_minutes": 90,
+    "remote_proctoring": null,
+    "adaptive": false
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "I'm looking to assess a Finance Manager candidate — VP level at a bank."
+    },
+    {
+      "role": "assistant",
+      "content": "For a senior finance role I'd typically look at numerical reasoning, a personality profile, and possibly a leadership/management style questionnaire. Any constraints on test duration or delivery format?",
+      "recommendations": []
+    },
+    {
+      "role": "user",
+      "content": "Up to 90 minutes is fine. It's an assessment centre so proctoring isn't a concern."
+    },
+    {
+      "role": "assistant",
+      "content": "Here is a recommended battery for a VP Finance candidate at an assessment centre...",
+      "recommendations": [
+        {"name": "Verify Numerical Reasoning", "test_type": "Ability & Aptitude"},
+        {"name": "OPQ32r", "test_type": "Personality & Behaviour"},
+        {"name": "Verify G+", "test_type": "Ability & Aptitude"}
+      ]
+    }
+  ],
+  "expected_shortlist": [
+    "Verify Numerical Reasoning",
+    "OPQ32r",
+    "Verify G+"
+  ]
+}

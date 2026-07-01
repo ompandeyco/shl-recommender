@@ -1,0 +1,41 @@
+{
+  "description": "Mid-level software engineer hiring — wants coding + cognitive tests, remote friendly",
+  "persona": "HR manager at a 300-person SaaS company hiring a backend engineer (Python/SQL). Wants to assess coding ability and numerical reasoning. Prefers remote-proctored, under 60 minutes total.",
+  "facts": {
+    "role": "Software Engineer (Backend)",
+    "seniority": "mid-level (3-5 yrs)",
+    "skills_to_assess": ["coding", "numerical reasoning"],
+    "max_duration_minutes": 60,
+    "remote_proctoring": true,
+    "adaptive": null
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "I need to hire a backend Python developer. What tests should I use?"
+    },
+    {
+      "role": "assistant",
+      "content": "Happy to help! A few quick questions: what seniority level are you hiring at, and roughly how long can candidates spend on assessments?",
+      "recommendations": []
+    },
+    {
+      "role": "user",
+      "content": "Mid-level, 3-5 years. I'd like to keep it under an hour and it must be remote."
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your needs, I recommend these assessments for a mid-level Python backend engineer...",
+      "recommendations": [
+        {"name": "Coding Pro", "test_type": "Simulations"},
+        {"name": "Verify Numerical Reasoning", "test_type": "Ability & Aptitude"},
+        {"name": "Verify Verbal Reasoning", "test_type": "Ability & Aptitude"}
+      ]
+    }
+  ],
+  "expected_shortlist": [
+    "Coding Pro",
+    "Verify Numerical Reasoning",
+    "Verify Verbal Reasoning"
+  ]
+}

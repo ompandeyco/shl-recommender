@@ -1,0 +1,41 @@
+{
+  "description": "Graduate sales recruiter — personality + cognitive, high volume, no coding",
+  "persona": "Talent acquisition lead at a FMCG company running a graduate sales scheme. Needs to screen 500+ applicants. Wants personality fit and verbal reasoning. No coding. Adaptive tests preferred to reduce time.",
+  "facts": {
+    "role": "Graduate Sales Representative",
+    "seniority": "entry-level / graduate",
+    "skills_to_assess": ["personality", "verbal reasoning", "sales aptitude"],
+    "max_duration_minutes": 30,
+    "remote_proctoring": true,
+    "adaptive": true
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "We're hiring 50 graduates for a sales programme. I need something that scales — ideally adaptive so it doesn't take too long."
+    },
+    {
+      "role": "assistant",
+      "content": "Great use case for adaptive assessments. Are you looking to measure personality fit, cognitive ability, or both? And is there a hard time limit per candidate?",
+      "recommendations": []
+    },
+    {
+      "role": "user",
+      "content": "Both — personality and verbal reasoning. Keep it under 30 minutes if possible."
+    },
+    {
+      "role": "assistant",
+      "content": "Here's a short, adaptive battery suited for high-volume graduate sales screening...",
+      "recommendations": [
+        {"name": "OPQ32r", "test_type": "Personality & Behaviour"},
+        {"name": "Verify Verbal Reasoning", "test_type": "Ability & Aptitude"},
+        {"name": "MQ", "test_type": "Motivation"}
+      ]
+    }
+  ],
+  "expected_shortlist": [
+    "OPQ32r",
+    "Verify Verbal Reasoning",
+    "MQ"
+  ]
+}

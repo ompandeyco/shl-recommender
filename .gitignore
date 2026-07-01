@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environments
+.env
+.venv/
+venv/
+
+# Raw HTML artifacts from scraper — never commit
+*.html
+
+# data/catalog.json is intentionally committed so it ships with the
+# deployed image on Render (no runtime scrape needed).
+# If you need to exclude it locally, run: git rm --cached data/catalog.json
+
+# IDE
+.vscode/
+.idea/
+
+# Eval scratch
+eval/traces/*.log
