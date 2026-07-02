@@ -54,8 +54,8 @@ log = logging.getLogger(__name__)
 # and leave 5 s for network/framework overhead.
 AGENT_TIMEOUT_SECONDS = 25
 
-# We warn (but don't fail) when the conversation is getting long.
-MAX_CONVERSATION_TURNS = 8   # mirrors agent.MAX_TURNS
+# Hard turn cap — mirrors agent.MAX_TURNS.
+MAX_CONVERSATION_TURNS = 8
 
 # ---------------------------------------------------------------------------
 # Safe fallback response — returned on any unhandled error
@@ -148,8 +148,9 @@ async def chat(request: ChatRequest, http_request: Request) -> ChatResponse:
       schema check never fails.
     * Hard timeout of 25 s around the agent call so we stay comfortably
       under the evaluator's 30 s cap.
-    * Conversation forced to wrap up after ``MAX_CONVERSATION_TURNS`` user
-      messages.
+    * Conversation is capped at ``MAX_CONVERSATION_TURNS`` user messages.
+      The cap check runs BEFORE agent.run() so we never risk a timeout on
+      the last turn — the response is synthesised locally with no LLM call.
     * Empty ``messages`` list is rejected with a clear 400-style fallback
       rather than a confusing downstream error.
     """
@@ -177,16 +178,30 @@ async def chat(request: ChatRequest, http_request: Request) -> ChatResponse:
             end_of_conversation=False,
         )
 
-    # ── Turn-cap check: count user turns ──────────────────────────────────────
+    # ── Turn-cap check: SHORT-CIRCUIT before any LLM call ─────────────────────
+    #
+    # IMPORTANT: This runs before agent.run() so we never risk hitting the
+    # 25 s timeout budget on a turn that has already exceeded the cap.
+    # The response is built entirely in this process — no network call needed.
     user_turn_count = sum(1 for m in messages if m.role == "user")
-    over_cap = user_turn_count >= MAX_CONVERSATION_TURNS
 
-    if over_cap:
+    if user_turn_count >= MAX_CONVERSATION_TURNS:
+        elapsed = time.perf_counter() - t_start
         log.info(
             "[%s] Conversation at cap (%d user turns). "
-            "Will force end_of_conversation=True on response.",
+            "Returning immediate EOC without LLM call (%.3fs).",
             request_id,
             user_turn_count,
+            elapsed,
+        )
+        return ChatResponse(
+            reply=(
+                "We've reached the end of our conversation. "
+                "I hope the recommendations were helpful! "
+                "If you need further assistance, please start a new session."
+            ),
+            recommendations=[],
+            end_of_conversation=True,
         )
 
     # ── Run agent with timeout ─────────────────────────────────────────────────
@@ -246,28 +261,6 @@ async def chat(request: ChatRequest, http_request: Request) -> ChatResponse:
             request_id, elapsed, exc,
         )
         return _FALLBACK_RESPONSE
-
-    # ── Apply turn-cap overlay ─────────────────────────────────────────────────
-    #
-    # If we're over the turn cap, force end_of_conversation=True and append
-    # a brief wrap-up note to the reply — but keep all recommendations the
-    # agent produced (don't discard good results just because we're at the cap).
-    #
-    # We do this here in main.py rather than in agent.py because main.py owns
-    # the HTTP contract (including the cap spec), while agent.py already has
-    # its own internal MAX_TURNS guard that converts to RETRIEVE.  Doing it
-    # in both places would create two competing cap thresholds.
-
-    if over_cap and not response.end_of_conversation:
-        response = ChatResponse(
-            reply=(
-                response.reply
-                + "\n\n_This conversation has reached its limit. "
-                "If you need more help, please start a new session._"
-            ),
-            recommendations=response.recommendations,
-            end_of_conversation=True,
-        )
 
     # ── Log the outgoing response ──────────────────────────────────────────────
     elapsed = time.perf_counter() - t_start

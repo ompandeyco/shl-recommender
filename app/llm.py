@@ -97,8 +97,12 @@ def _with_retry(fn, *, retries: int = 3, backoff: float = 1.5) -> Any:
     """
     Call fn() up to `retries` times with exponential backoff.
 
-    Retries on transient errors (rate limits, server errors).  Re-raises
-    the last exception if all attempts fail.
+    Rate-limit (429 / TPD exhausted) errors are raised immediately as
+    ``RateLimitException`` WITHOUT sleeping so that ``chat_completion``
+    can fall over to the next provider without burning timeout budget.
+
+    Transient non-429 errors (server errors, network blips) are still
+    retried with exponential back-off up to ``retries`` attempts.
     """
     last_exc: Exception | None = None
     for attempt in range(retries):
@@ -107,30 +111,32 @@ def _with_retry(fn, *, retries: int = 3, backoff: float = 1.5) -> Any:
         except Exception as exc:  # noqa: BLE001
             last_exc = exc
             exc_str = str(exc).lower()
-            
-            is_rate_limit = "429" in exc_str or "rate limit" in exc_str or "too many requests" in exc_str
-            
-            # If it's the last attempt, don't sleep, just let it fall out and raise
-            if attempt == retries - 1:
-                if is_rate_limit:
-                    log.error("LLM Rate Limit exhausted after %d attempts: %s", retries, exc)
-                    raise RateLimitException(str(exc)) from exc
-                break
-                
+
+            is_rate_limit = (
+                "429" in exc_str
+                or "rate limit" in exc_str
+                or "too many requests" in exc_str
+            )
+
             if is_rate_limit:
-                wait = 10.0 if attempt == 0 else 20.0
+                # Fail fast — no sleep.  Caller (chat_completion) will try
+                # the next provider immediately.
                 log.warning(
-                    "LLM Rate Limit Hit (attempt %d/%d): %s — retrying in %.1fs",
-                    attempt + 1, retries, exc, wait,
+                    "LLM Rate Limit (attempt %d/%d): %s — failing over immediately.",
+                    attempt + 1, retries, exc,
                 )
-            else:
-                wait = backoff ** attempt
-                log.warning(
-                    "LLM call failed (attempt %d/%d): %s — retrying in %.1fs",
-                    attempt + 1, retries, exc, wait,
-                )
+                raise RateLimitException(str(exc)) from exc
+
+            # Transient (non-429) error: sleep and retry.
+            if attempt == retries - 1:
+                break
+            wait = backoff ** attempt
+            log.warning(
+                "LLM call failed (attempt %d/%d): %s — retrying in %.1fs",
+                attempt + 1, retries, exc, wait,
+            )
             time.sleep(wait)
-            
+
     raise last_exc  # type: ignore[misc]
 
 
