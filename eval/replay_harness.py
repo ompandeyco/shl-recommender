@@ -150,6 +150,7 @@ def call_chat(
     """
     url = f"{base_url.rstrip('/')}/chat"
     payload = {"messages": messages}
+    time.sleep(5)  # Add a delay of 4-5 seconds between each request
     t0 = time.perf_counter()
     try:
         resp = client.post(url, json=payload, timeout=timeout)
@@ -238,6 +239,11 @@ def replay_trace(
             for err in schema_errors:
                 flags.append(f"BAD_SCHEMA (turn {turn_idx + 1}): {err}")
             # Still record the turn so we can inspect it; don't break.
+            
+        reply_content = body.get("reply", "")
+        if "temporarily unable to process, please retry" in reply_content.lower():
+            print(f"  [WARN] Turn {turn_idx + 1} hit a rate limit! This data point is invalid.")
+            flags.append(f"RATE_LIMIT (turn {turn_idx + 1}): API rate limit reached")
 
         server_turns.append({"turn": turn_idx + 1, "elapsed": round(elapsed, 2), **body})
 

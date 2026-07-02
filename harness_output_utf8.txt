@@ -1,0 +1,79 @@
+﻿Loaded 10 catalog URLs from D:\shl\shl-recommender\data\catalog.json
+Found 5 trace(s) ù replaying against https://shl-recommender-nk6g.onrender.com
+
+
+  TRACE 01  trace_01_software_engineer.json
+  Mid-level software engineer hiring ù wants coding + cognitive tests, rem
+
+    Recall@10 : [####################] 1.00
+    Gold      : Coding Pro, Verify Numerical Reasoning, Verify Verbal Reasoning
+    Retrieved : Verify Numerical Reasoning, Coding Pro, Verify Verbal Reasoning, Verify Inductive Reasoning, OPQ32r, Contact Centre Scenarios, English Comprehension, MQ, Verify G+, Customer Service Simulation
+    Turns     : 2  (11.1s total)
+      Turn 1: 10 rec(s)  (2.4s)  [EOC]
+      Turn 2: 10 rec(s)  (8.7s)  [EOC]
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+
+  TRACE 02  trace_02_graduate_sales.json
+  Graduate sales recruiter ù personality + cognitive, high volume, no codi
+
+    Recall@10 : [####################] 1.00
+    Gold      : OPQ32r, Verify Verbal Reasoning, MQ
+    Retrieved : Verify Verbal Reasoning, OPQ32r, Verify Numerical Reasoning, Verify Inductive Reasoning, Coding Pro, Contact Centre Scenarios, English Comprehension, MQ, Verify G+, Customer Service Simulation
+    Turns     : 2  (19.7s total)
+      Turn 1: 10 rec(s)  (10.0s)  [EOC]
+      Turn 2: 10 rec(s)  (9.8s)  [EOC]
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+
+  TRACE 03  trace_03_senior_finance.json
+  Senior finance manager ù numerical reasoning + leadership, on-site proct
+
+    Recall@10 : [####################] 1.00
+    Gold      : Verify Numerical Reasoning, OPQ32r, Verify G+
+    Retrieved : Verify Numerical Reasoning, Verify Verbal Reasoning, Verify Inductive Reasoning, Coding Pro, OPQ32r, Contact Centre Scenarios, English Comprehension, MQ, Verify G+, Customer Service Simulation
+    Turns     : 2  (20.2s total)
+      Turn 1: 10 rec(s)  (10.7s)  [EOC]
+      Turn 2: 10 rec(s)  (9.5s)  [EOC]
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+
+  TRACE 04  trace_04_out_of_scope.json
+  Out-of-scope request ù agent must refuse politely
+
+    Recall@10 : [....................] 0.00
+    Gold      : (none ù REFUSE/CLARIFY trace)
+    Retrieved : (none)
+    Turns     : 1  (5.7s total)
+      Turn 1: 0 rec(s)  (5.7s)
+    OK  No quality flags
+
+  TRACE 05  trace_05_customer_service.json
+  Customer service agent ù situational judgement + personality, volume hir
+
+    Recall@10 : [####################] 1.00
+    Gold      : Customer Service Simulation, OPQ32r, Verify Verbal Reasoning
+    Retrieved : Customer Service Simulation, Verify Numerical Reasoning, Verify Verbal Reasoning, Verify Inductive Reasoning, Coding Pro, OPQ32r, Contact Centre Scenarios, English Comprehension, MQ, Verify G+
+    Turns     : 2  (20.8s total)
+      Turn 1: 10 rec(s)  (10.2s)  [EOC]
+      Turn 2: 10 rec(s)  (10.6s)  [EOC]
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+
+============================================================
+  AGGREGATE SUMMARY
+============================================================
+
+  Trace                                         Recall@10  Flags
+  --------------------------------------------  ---------  -----
+  trace_01_software_engineer.json                    1.00  1 flag(s)
+  trace_02_graduate_sales.json                       1.00  1 flag(s)
+  trace_03_senior_finance.json                       1.00  1 flag(s)
+  trace_04_out_of_scope.json                         0.00  OK
+  trace_05_customer_service.json                     1.00  1 flag(s)
+
+  Mean Recall@10 : 0.8000  [################....] 0.80
+
+  Hard failures (4 total):
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+    !! EARLY_REC (turn 1): agent returned 10 recommendation(s) when gold expected 0 (should have clarified first)
+
+Exit 1: hard failures detected (BAD_URL / BAD_SCHEMA / EARLY_REC)

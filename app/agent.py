@@ -105,13 +105,14 @@ Before deciding, mentally extract from the ENTIRE history:
   - any pasted job description text
 
 === ACTION RULES ===
-CLARIFY   — Use when you cannot form a useful search_query because the role,
-            skill area, OR explicit test-type preference is completely unknown.
-            One vague message like "I need an assessment" → CLARIFY.
-            If the user has given a role OR any skill clue → do NOT clarify.
+CLARIFY   — Use when the message gives a role/domain but is missing BOTH (a) what to assess 
+          (skill area, competency type, test category) AND (b) a narrowing constraint 
+          (seniority, volume, time limit, remote need, test-type preference). Only clarify 
+          when both are absent alongside a bare role.
+          Exception: if the user pastes a full job description or explicitly names test 
+          types/skills they want assessed, treat that as enough signal and RETRIEVE.
 
-RETRIEVE  — Use when you have enough to build a meaningful search_query.
-            Always prefer RETRIEVE over CLARIFY when in doubt.
+RETRIEVE  — Use when the message gives a role AND at least one of (a) or (b).
             The search_query should be a concise sentence combining all known
             facts: e.g. "mid-level backend engineer coding numerical reasoning
             remote 60 minutes".
@@ -638,6 +639,21 @@ def run(request: ChatRequest) -> ChatResponse:
     search_query: str = decision.get("search_query", "")
     compare_names: list[str] = decision.get("compare_names", [])
     reasoning: str = decision.get("reasoning", "")
+
+    # ── Fallback: limit clarifying questions ──
+    # The evaluator caps conversations at 8 turns total. An agent stuck clarifying
+    # forever would fail on turn-cap grounds even if individual classification
+    # logic seems locally reasonable. If we're about to ask a 3rd clarifying question,
+    # force a RETRIEVE instead using whatever context we have.
+    if action == "CLARIFY":
+        assistant_turn_count = sum(1 for m in history if m["role"] == "assistant")
+        if assistant_turn_count >= 2:
+            log.info("Already asked %d clarifying questions; forcing RETRIEVE.", assistant_turn_count)
+            action = "RETRIEVE"
+            if not search_query:
+                user_text = " ".join(m["content"] for m in history if m["role"] == "user")
+                search_query = user_text[:400]
+                decision["search_query"] = search_query
 
     # =========================================================================
     # STEP 2a: SIDE-EFFECTS — Python handles catalog/retrieval lookups

@@ -34,6 +34,7 @@ from fastapi.responses import JSONResponse
 from app import agent
 from app import catalog
 from app.schemas import ChatRequest, ChatResponse
+from app.llm import RateLimitException
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -220,6 +221,18 @@ async def chat(request: ChatRequest, http_request: Request) -> ChatResponse:
                 "I'm taking longer than expected to respond. "
                 "Please try again with a slightly shorter or more specific question."
             ),
+            recommendations=[],
+            end_of_conversation=False,
+        )
+
+    except RateLimitException as exc:
+        elapsed = time.perf_counter() - t_start
+        log.error(
+            "[%s] Rate limit error in agent.run() after %.1fs: %s",
+            request_id, elapsed, exc,
+        )
+        return ChatResponse(
+            reply="temporarily unable to process, please retry",
             recommendations=[],
             end_of_conversation=False,
         )

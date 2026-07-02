@@ -17,8 +17,9 @@ google-genai>=1.0.0           # Google Gemini — current SDK (replaces google-g
 # Environment variable loading
 python-dotenv>=1.0.0
 
-# HTTP client (for eval harness)
+# HTTP client (for eval harness and behavior probes)
 httpx>=0.27.0
+requests>=2.32.0
 
 # Scraper
 playwright>=1.44.0

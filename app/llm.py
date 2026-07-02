@@ -46,21 +46,30 @@ class ConfigError(RuntimeError):
     """Raised when no LLM API key is present in the environment."""
 
 
-def _detect_provider() -> str:
-    """Return 'groq', 'openai', or 'google', or raise ConfigError."""
+class RateLimitException(Exception):
+    """Raised when an explicit rate limit (429) is hit and exhausted retries."""
+    pass
+
+
+def _detect_providers() -> list[str]:
+    """Return list of available providers, or raise ConfigError."""
+    providers = []
     if os.getenv("GROQ_API_KEY"):
-        return "groq"
-    if os.getenv("OPENAI_API_KEY"):
-        return "openai"
+        providers.append("groq")
     if os.getenv("GOOGLE_API_KEY"):
-        return "google"
-    raise ConfigError(
-        "No LLM API key found. Set GROQ_API_KEY, OPENAI_API_KEY, or GOOGLE_API_KEY "
-        "in your .env file. The agent cannot run without an LLM provider."
-    )
+        providers.append("google")
+    if os.getenv("OPENAI_API_KEY"):
+        providers.append("openai")
+        
+    if not providers:
+        raise ConfigError(
+            "No LLM API key found. Set GROQ_API_KEY, OPENAI_API_KEY, or GOOGLE_API_KEY "
+            "in your .env file. The agent cannot run without an LLM provider."
+        )
+    return providers
 
 
-_PROVIDER: str = _detect_provider()
+_PROVIDERS: list[str] = _detect_providers()
 
 # Default model names per provider (overridable via LLM_MODEL)
 _DEFAULT_MODELS: dict[str, str] = {
@@ -73,9 +82,11 @@ _DEFAULT_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.2"))
 _DEFAULT_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "1024"))
 
 
-def _resolved_model(override: str | None) -> str:
+def _resolved_model(override: str | None, provider: str) -> str:
     """Return the model name to use, respecting env + caller override."""
-    return override or os.getenv("LLM_MODEL") or _DEFAULT_MODELS[_PROVIDER]
+    if provider == _PROVIDERS[0]:
+        return override or os.getenv("LLM_MODEL") or _DEFAULT_MODELS[provider]
+    return override or _DEFAULT_MODELS[provider]
 
 
 # ---------------------------------------------------------------------------
@@ -95,12 +106,31 @@ def _with_retry(fn, *, retries: int = 3, backoff: float = 1.5) -> Any:
             return fn()
         except Exception as exc:  # noqa: BLE001
             last_exc = exc
-            wait = backoff ** attempt
-            log.warning(
-                "LLM call failed (attempt %d/%d): %s — retrying in %.1fs",
-                attempt + 1, retries, exc, wait,
-            )
+            exc_str = str(exc).lower()
+            
+            is_rate_limit = "429" in exc_str or "rate limit" in exc_str or "too many requests" in exc_str
+            
+            # If it's the last attempt, don't sleep, just let it fall out and raise
+            if attempt == retries - 1:
+                if is_rate_limit:
+                    log.error("LLM Rate Limit exhausted after %d attempts: %s", retries, exc)
+                    raise RateLimitException(str(exc)) from exc
+                break
+                
+            if is_rate_limit:
+                wait = 10.0 if attempt == 0 else 20.0
+                log.warning(
+                    "LLM Rate Limit Hit (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, retries, exc, wait,
+                )
+            else:
+                wait = backoff ** attempt
+                log.warning(
+                    "LLM call failed (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, retries, exc, wait,
+                )
             time.sleep(wait)
+            
     raise last_exc  # type: ignore[misc]
 
 
@@ -274,16 +304,32 @@ def chat_completion(
     str
         Raw text of the assistant's reply.
     """
-    resolved = _resolved_model(model)
-    log.debug("chat_completion provider=%s model=%s", _PROVIDER, resolved)
+    for i, provider in enumerate(_PROVIDERS):
+        resolved = _resolved_model(model, provider)
+        log.debug("chat_completion provider=%s model=%s", provider, resolved)
 
-    if _PROVIDER == "groq":
-        return _chat_groq(messages, resolved, temperature, max_tokens)
-    if _PROVIDER == "openai":
-        return _chat_openai(messages, resolved, temperature, max_tokens)
-    if _PROVIDER == "google":
-        return _chat_google(messages, resolved, temperature, max_tokens)
-    raise ConfigError(f"Unknown provider: {_PROVIDER!r}")
+        try:
+            if provider == "groq":
+                result = _chat_groq(messages, resolved, temperature, max_tokens)
+            elif provider == "openai":
+                result = _chat_openai(messages, resolved, temperature, max_tokens)
+            elif provider == "google":
+                result = _chat_google(messages, resolved, temperature, max_tokens)
+            else:
+                raise ConfigError(f"Unknown provider: {provider!r}")
+                
+            log.info("Request served by provider: %s (model: %s)", provider, resolved)
+            return result
+            
+        except RateLimitException:
+            if i < len(_PROVIDERS) - 1:
+                log.warning("Provider %s rate limited, falling back to %s.", provider, _PROVIDERS[i+1])
+                continue
+            else:
+                log.error("All available providers rate limited.")
+                raise
+                
+    raise ConfigError("No providers available.")
 
 
 def embed(text: str) -> list[float]:
@@ -300,13 +346,29 @@ def embed(text: str) -> list[float]:
     list[float]
         Dense float vector.
     """
-    if _PROVIDER == "groq":
-        return _embed_groq(text)
-    if _PROVIDER == "openai":
-        return _embed_openai(text)
-    if _PROVIDER == "google":
-        return _embed_google(text)
-    raise ConfigError(f"Unknown provider: {_PROVIDER!r}")
+    for i, provider in enumerate(_PROVIDERS):
+        try:
+            if provider == "groq":
+                result = _embed_groq(text)
+            elif provider == "openai":
+                result = _embed_openai(text)
+            elif provider == "google":
+                result = _embed_google(text)
+            else:
+                raise ConfigError(f"Unknown provider: {provider!r}")
+                
+            log.info("Embedding served by provider: %s", provider)
+            return result
+            
+        except RateLimitException:
+            if i < len(_PROVIDERS) - 1:
+                log.warning("Provider %s rate limited for embedding, falling back to %s.", provider, _PROVIDERS[i+1])
+                continue
+            else:
+                log.error("All available providers rate limited for embeddings.")
+                raise
+
+    raise ConfigError("No providers available.")
 
 
 def parse_json_response(raw: str) -> dict:

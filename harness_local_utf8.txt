@@ -1,0 +1,74 @@
+﻿Loaded 10 catalog URLs from D:\shl\shl-recommender\data\catalog.json
+Found 5 trace(s) ù replaying against http://localhost:8000
+
+
+  TRACE 01  trace_01_software_engineer.json
+  Mid-level software engineer hiring ù wants coding + cognitive tests, rem
+
+    Recall@10 : [####################] 1.00
+    Gold      : Coding Pro, Verify Numerical Reasoning, Verify Verbal Reasoning
+    Retrieved : Coding Pro, English Comprehension, Verify Numerical Reasoning, Verify Verbal Reasoning, Verify Inductive Reasoning, OPQ32r, Contact Centre Scenarios, MQ, Verify G+, Customer Service Simulation
+    Turns     : 2  (13.9s total)
+      Turn 1: 0 rec(s)  (6.9s)
+      Turn 2: 10 rec(s)  (7.0s)  [EOC]
+    OK  No quality flags
+
+  TRACE 02  trace_02_graduate_sales.json
+  Graduate sales recruiter ù personality + cognitive, high volume, no codi
+
+    Recall@10 : [####################] 1.00
+    Gold      : OPQ32r, Verify Verbal Reasoning, MQ
+    Retrieved : Verify Verbal Reasoning, OPQ32r, Verify Numerical Reasoning, Verify Inductive Reasoning, Coding Pro, Contact Centre Scenarios, English Comprehension, MQ, Verify G+, Customer Service Simulation
+    Turns     : 2  (26.6s total)
+      Turn 1: 0 rec(s)  (10.1s)
+      Turn 2: 10 rec(s)  (16.5s)  [EOC]
+    OK  No quality flags
+
+  TRACE 03  trace_03_senior_finance.json
+  Senior finance manager ù numerical reasoning + leadership, on-site proct
+
+    Recall@10 : [....................] 0.00
+    Gold      : Verify Numerical Reasoning, OPQ32r, Verify G+
+    Retrieved : (none)
+    Turns     : 2  (21.9s total)
+      Turn 1: 0 rec(s)  (13.6s)
+      Turn 2: 0 rec(s)  (8.4s)
+    OK  No quality flags
+
+  TRACE 04  trace_04_out_of_scope.json
+  Out-of-scope request ù agent must refuse politely
+
+    Recall@10 : [....................] 0.00
+    Gold      : (none ù REFUSE/CLARIFY trace)
+    Retrieved : (none)
+    Turns     : 1  (8.7s total)
+      Turn 1: 0 rec(s)  (8.7s)
+    OK  No quality flags
+
+  TRACE 05  trace_05_customer_service.json
+  Customer service agent ù situational judgement + personality, volume hir
+
+    Recall@10 : [....................] 0.00
+    Gold      : Customer Service Simulation, OPQ32r, Verify Verbal Reasoning
+    Retrieved : (none)
+    Turns     : 2  (15.1s total)
+      Turn 1: 0 rec(s)  (8.1s)
+      Turn 2: 0 rec(s)  (7.1s)
+    OK  No quality flags
+
+============================================================
+  AGGREGATE SUMMARY
+============================================================
+
+  Trace                                         Recall@10  Flags
+  --------------------------------------------  ---------  -----
+  trace_01_software_engineer.json                    1.00  OK
+  trace_02_graduate_sales.json                       1.00  OK
+  trace_03_senior_finance.json                       0.00  OK
+  trace_04_out_of_scope.json                         0.00  OK
+  trace_05_customer_service.json                     0.00  OK
+
+  Mean Recall@10 : 0.4000  [########............] 0.40
+
+  No hard failures detected.
+

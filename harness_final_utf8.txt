@@ -1,0 +1,74 @@
+﻿Loaded 10 catalog URLs from D:\shl\shl-recommender\data\catalog.json
+Found 5 trace(s) ù replaying against http://localhost:8000
+
+
+  TRACE 01  trace_01_software_engineer.json
+  Mid-level software engineer hiring ù wants coding + cognitive tests, rem
+
+    Recall@10 : [....................] 0.00
+    Gold      : Coding Pro, Verify Numerical Reasoning, Verify Verbal Reasoning
+    Retrieved : (none)
+    Turns     : 2  (38.4s total)
+      Turn 1: 0 rec(s)  (27.1s)
+      Turn 2: 0 rec(s)  (11.3s)
+    OK  No quality flags
+
+  TRACE 02  trace_02_graduate_sales.json
+  Graduate sales recruiter ù personality + cognitive, high volume, no codi
+
+    Recall@10 : [....................] 0.00
+    Gold      : OPQ32r, Verify Verbal Reasoning, MQ
+    Retrieved : (none)
+    Turns     : 2  (20.2s total)
+      Turn 1: 0 rec(s)  (10.6s)
+      Turn 2: 0 rec(s)  (9.5s)
+    OK  No quality flags
+
+  TRACE 03  trace_03_senior_finance.json
+  Senior finance manager ù numerical reasoning + leadership, on-site proct
+
+    Recall@10 : [....................] 0.00
+    Gold      : Verify Numerical Reasoning, OPQ32r, Verify G+
+    Retrieved : (none)
+    Turns     : 2  (13.3s total)
+      Turn 1: 0 rec(s)  (6.2s)
+      Turn 2: 0 rec(s)  (7.1s)
+    OK  No quality flags
+
+  TRACE 04  trace_04_out_of_scope.json
+  Out-of-scope request ù agent must refuse politely
+
+    Recall@10 : [....................] 0.00
+    Gold      : (none ù REFUSE/CLARIFY trace)
+    Retrieved : (none)
+    Turns     : 1  (10.8s total)
+      Turn 1: 0 rec(s)  (10.8s)
+    OK  No quality flags
+
+  TRACE 05  trace_05_customer_service.json
+  Customer service agent ù situational judgement + personality, volume hir
+
+    Recall@10 : [....................] 0.00
+    Gold      : Customer Service Simulation, OPQ32r, Verify Verbal Reasoning
+    Retrieved : (none)
+    Turns     : 2  (20.5s total)
+      Turn 1: 0 rec(s)  (13.8s)
+      Turn 2: 0 rec(s)  (6.7s)
+    OK  No quality flags
+
+============================================================
+  AGGREGATE SUMMARY
+============================================================
+
+  Trace                                         Recall@10  Flags
+  --------------------------------------------  ---------  -----
+  trace_01_software_engineer.json                    0.00  OK
+  trace_02_graduate_sales.json                       0.00  OK
+  trace_03_senior_finance.json                       0.00  OK
+  trace_04_out_of_scope.json                         0.00  OK
+  trace_05_customer_service.json                     0.00  OK
+
+  Mean Recall@10 : 0.0000  [....................] 0.00
+
+  No hard failures detected.
+

@@ -1,0 +1,141 @@
+﻿python : LLM call failed (attempt 1/3): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your 
+current quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 
+0, model: gemini-2.0-flash\n* Quota exceeded for metric: 
+generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota 
+exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: 
+gemini-2.0-flash\nPlease retry in 59.168427765s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 
+'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 
+'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 
+'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 
+'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '59s'}]}} ù retrying in 
+1.0s
+At line:1 char:1
++ python scratch_diagnostic_t2.py > diag.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (LLM call failed...etrying in 1.0s:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+LLM call failed (attempt 2/3): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current 
+quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 
+0, model: gemini-2.0-flash\n* Quota exceeded for metric: 
+generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota 
+exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: 
+gemini-2.0-flash\nPlease retry in 56.01791678s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 
+'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 
+'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 
+'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 
+'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '56s'}]}} ù retrying in 
+1.5s
+LLM call failed (attempt 3/3): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current 
+quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: 
+gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, 
+limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: 
+generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: 
+gemini-2.0-flash\nPlease retry in 51.911431599s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 
+'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 
+'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 
+'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 
+'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 
+'location': 'global'}}, {'quotaMetric': 
+'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 
+'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '51s'}]}} ù retrying in 
+2.2s
+Traceback (most recent call last):
+  File "D:\shl\shl-recommender\scratch_diagnostic_t2.py", line 42, in <module>
+    main()
+  File "D:\shl\shl-recommender\scratch_diagnostic_t2.py", line 33, in main
+    decision = _decide(history)
+               ^^^^^^^^^^^^^^^^
+  File "D:\shl\shl-recommender\app\agent.py", line 229, in _decide
+    raw = llm.chat_completion(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "D:\shl\shl-recommender\app\llm.py", line 285, in chat_completion
+    return _chat_google(messages, resolved, temperature, max_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\shl\shl-recommender\app\llm.py", line 227, in _chat_google
+    return _with_retry(_call)
+           ^^^^^^^^^^^^^^^^^^
+  File "D:\shl\shl-recommender\app\llm.py", line 104, in _with_retry
+    raise last_exc  # type: ignore[misc]
+    ^^^^^^^^^^^^^^
+  File "D:\shl\shl-recommender\app\llm.py", line 95, in _with_retry
+    return fn()
+           ^^^^
+  File "D:\shl\shl-recommender\app\llm.py", line 216, in _call
+    response = client.models.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\google\genai\models.py", line 6526, in generate_content
+    response = self._generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\google\genai\models.py", line 4954, in _generate_content
+    response = self._api_client.request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\google\genai\_api_client.py", line 1618, in request
+    response = self._request(http_request, http_options, stream=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\google\genai\_api_client.py", line 1411, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\tenacity\__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\tenacity\__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\LPU APPS\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\LPU APPS\Lib\site-packages\google\genai\_api_client.py", line 1388, in _request_once
+    errors.APIError.raise_for_response(response)
+  File "E:\LPU APPS\Lib\site-packages\google\genai\errors.py", line 155, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+  File "E:\LPU APPS\Lib\site-packages\google\genai\errors.py", line 184, in raise_error
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current 
+quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: 
+gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, 
+limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: 
+generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: 
+gemini-2.0-flash\nPlease retry in 51.911431599s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 
+'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 
+'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 
+'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 
+'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 
+'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 
+'location': 'global'}}, {'quotaMetric': 
+'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 
+'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 
+'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '51s'}]}}
